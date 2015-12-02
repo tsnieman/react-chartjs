@@ -125,8 +125,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        dataKey = dataKey || dataKeys[chart.name];
 	        updatePoints(nextProps, chart, dataKey);
-	        chart.scale.xLabels = nextProps.data.labels;
-	        chart.scale.calculateXLabelRotation();
+	        chart.scaleLabel = nextProps.data.labels;
+	        //chart.scale.calculateXLabelRotation(); // Needed for chartjs-2.0.0?
 	        chart.update();
 	      }
 	    };
@@ -189,15 +189,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    });
 	  } else {
-	    while (chart.scale.xLabels.length > nextProps.data.labels.length) {
+	    // TODO
+	    //while (chart.scaleLabel.length > nextProps.data.labels.length) {
+	    if (chart.scale) { // TODO remove. probably not what the logic should be.
 	      chart.removeData();
 	    }
+	    //}
 	    nextProps.data.datasets.forEach(function(set, setIndex) {
 	      set.data.forEach(function(val, pointIndex) {
-	        if (typeof(chart.datasets[setIndex][dataKey][pointIndex]) == "undefined") {
+	        // TODO come back to this if/else logic.
+	        // Typically the vars look like this: {setIndex: 0, dataKey: undefined, pointIndex: 0}
+	        // which seems awfully wrong. This logic has been modified for chartjs-2.0.0 and may not
+	        // be accurate/good anymore.
+	        if (typeof(chart.options.data.datasets[setIndex]) == "undefined") {
 	          addData(nextProps, chart, setIndex, pointIndex);
 	        } else {
-	          chart.datasets[setIndex][dataKey][pointIndex].value = val;
+	          chart.options.data.datasets[setIndex].data[dataKey] = val;
+	          chart.update();
 	        }
 	      });
 	    });
