@@ -1,6 +1,6 @@
 {
   "name": "react-chartjs",
-  "version": "0.7.0",
+  "version": "2.0.0-beta1",
   "description": "react charting components using the chartjs lib",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,11 @@
     "react": "*",
     "react-dom": "*",
     "chart.js": "*"
+  },
+  "dependencies": {
+    "react": "*",
+    "react-dom": "*",
+    "chart.js": "nnnick/Chart.js#2.0.0-beta1"
   },
   "devDependencies": {
     "uglify-js": "^2.4.16",
